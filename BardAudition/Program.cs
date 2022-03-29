@@ -50,11 +50,23 @@ public class Program
         //InputSys.Init();
         //AudioSys.Init();
         var audioCtrl = new AudioController();
-        var noteCtrl = audioCtrl.GetNoteController();
+        var noteCtrl = audioCtrl.GetNoteController() as NoteSynthesizer;
+        if (noteCtrl == null) { throw new Exception($"noteCtrl wasn't NoteSynthesizer"); }
         var activeNote = -1;
+
+        var debugTiming = false;
+        var dbgWatch = (System.Diagnostics.Stopwatch?)null;
         
         foreach (var keyBinding in InputSys.GetKeyBindings()) {
             KeyHookSys.RegisterKeyDown(keyBinding.formsKey, _ => {
+                if (debugTiming)
+                {
+                    dbgWatch = System.Diagnostics.Stopwatch.StartNew();
+                    dbgWatch.Start();
+                    noteCtrl.dbgWatch = dbgWatch;
+                    noteCtrl.dbgWaitingForNoteOn = true;
+                }
+
                 activeNote = keyBinding.midiPitch;
                 noteCtrl.NoteOn(keyBinding.midiPitch);
             });

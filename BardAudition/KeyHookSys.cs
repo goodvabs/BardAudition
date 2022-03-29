@@ -103,10 +103,19 @@ public static class KeyHookSys
             // Name of the key
             var formsKeyName = ((Keys)vkCode).ToString();
 
-            // Fire callback.
-            if (keyDownCbs.TryGetValue(formsKeyName, out var cb))
+            // Set key state.
+            //
+            // Allows us to ignore represses from holding the button down.
+            var wasAlreadyPressed = keyState.Contains(vkCode);
+            keyState.Add(vkCode);
+
+            if (!wasAlreadyPressed)
             {
-                cb?.Invoke(null);
+                // Fire key down callback.
+                if (keyDownCbs.TryGetValue(formsKeyName, out var cb))
+                {
+                    cb?.Invoke(null);
+                }
             }
 
             //// Display the name of the key
@@ -144,10 +153,12 @@ public static class KeyHookSys
             //{
             //    CONTROL_DOWN = false;                      // Unflag control
             //}
+            keyState.Remove(vkCode);
         }
         return CallNextHookEx(_hookID, nCode, wParam, lParam); //Call the next hook
     }
 
+    public static HashSet<int> keyState = new HashSet<int>();
     public static Dictionary<string, Action<object?>> keyDownCbs = new Dictionary<string, Action<object?>>();
     public static Dictionary<string, Action<object?>> keyUpCbs = new Dictionary<string, Action<object?>>();
 

@@ -17,16 +17,17 @@ public interface INoteController
 
 public class AudioController : IDisposable
 {
-    private NoteSampleProvider noteSampleController;
+    private NoteSynthesizer noteSampleController;
     private NAudio.Wave.WaveOut waveOut;
 
     public AudioController()
     {
         var soundFontPath = "Assets/TimGM6mb.sf2";
-        noteSampleController = new NoteSampleProvider(soundFontPath);
+        noteSampleController = new NoteSynthesizer(soundFontPath);
 
         waveOut = new NAudio.Wave.WaveOut(NAudio.Wave.WaveCallbackInfo.FunctionCallback());
-        waveOut.Init(noteSampleController);
+        waveOut.DesiredLatency = 50;
+        waveOut.Init(noteSampleController, convertTo16Bit: true);
         waveOut.Play();
     }
 
