@@ -3,7 +3,9 @@ A keyboard synth controller for Windows that works when out-of-focus, intended f
 
 ## Latency is the enemy
 
-Still working on latency. The goal is for very low-latency synth operation so you can use it to hear yourself playing anything at any speed and not get tripped up by high latency. Success is less than 40 ms of delay, but I don't have measurements for current performance. Latency is high right now. 
+Bard Performance in FFXIV is extremely fun, but the latency you get while using makes it almost unusable! But if you have this running in the background, it'll play back what you're playing to you with far less latency, making it possible to improvise during Bard Performance without getting tripped up by the latency.
+
+On my 2.20 GHz processor I'm able to get consistently sub-30 ms latency even while the game is running.
 
 ## Windows only
 
@@ -11,7 +13,7 @@ Windows-specific DLL hooks are being used to detect low-level keypresses so this
 
 ## .NET / C# Version
 
-I'm targeting recent stuff with C# 10 and .NET 6 (as of writing: 2022-03-28). Dunno how much of the new stuff is actually necessary.
+I'm targeting recent stuff with C# 10 and .NET 4.8 (as of writing: 2022-03-28). Dunno how much of the new stuff is actually necessary.
 
 ## Soundfont dependency
 
