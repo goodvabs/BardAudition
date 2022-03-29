@@ -155,14 +155,14 @@ public static class KeyHookSys
     {
         keyDownCbs[winFormsKey] = keyDownCb;
 
-        Console.Write($"(todo) InputSys Registered '{winFormsKey}' down; ");
+        Console.Write($"InputSys Registered '{winFormsKey}' down; ");
     }
 
     public static void RegisterKeyUp(string winFormsKey, Action<object?> keyUpCb)
     {
         keyUpCbs[winFormsKey] = keyUpCb;
 
-        Console.Write($"(todo) InputSys Registered '{winFormsKey}' up; ");
+        Console.Write($"InputSys Registered '{winFormsKey}' up; ");
     }
 
     #endregion
